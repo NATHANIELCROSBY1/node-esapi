@@ -1,77 +1,27 @@
-[node-esapi](https://github.com/DeadAlready/node-esapi) is a minimal port of the ESAPI4JS (Enterprise Security API for JavaScript)
-encoder.
+## Flutter SDK dependency versions
 
-# Installation
+The files in this directory specifies pinned versions of various
+dependencies of the flutter SDK.
 
-    $ npm install node-esapi
+The `bin/internal/engine.version` file controls which version of the
+Flutter engine to use. The file contains the commit hash of a commit
+in the <https://github.com/flutter/engine> repository. That hash must
+have successfully been compiled on
+<https://build.chromium.org/p/client.flutter/> and had its artifacts
+(the binaries that run on Android and iOS, the compiler, etc)
+successfully uploaded to Google Cloud Storage.
 
-# Usage
+The `/bin/internal/engine.merge_method` file controls how we merge a
+pull request created by the engine auto-roller. If it's `squash`,
+there's only one commit for a pull request no matter how many engine
+commits there are inside that pull request. If it's `rebase`, the
+number of commits in the framework is equal to the number of engine
+commits in the pull request. The latter method makes it easier to
+detect regressions but costs more test resources.
 
-	var ESAPI = require('node-esapi');
-	ESAPI.encoder().encodeForHTML('<p>This is a test</p>');
-
-# Encoder Functions
-
-The encoder() returns an object with the following main functions:
-
-+ encodeForHTML
-+ encodeForCSS
-+ encodeForJS = encodeForJavaScript = encodeForJavascript
-+ encodeForURL
-+ encodeForHTMLAttribute
-+ encodeForBase64
-
-# Middleware
-
-The ESAPI has a function for creating express middleware to serve client side scripts of ESAPI.
-
-	app.use(ESAPI.middleware());
-
-	// Now in your HTML you can do
-	<script src="/esapi/esapi.js"></script>
-	<script src="/esapi/resources/i18n/ESAPI_Standard_en_US.properties.js"></script>
-	<script src="/esapi/resources/Base.esapi.properties.js"></script>
-	<script>
-		org.owasp.esapi.ESAPI.initialize();
-		//Here you have access to the $ESAPI object and can do
-		$ESAPI.encoder().encodeForHTML('<p>This is a test</p>');
-	</script>
-
-# Licence
-
-## ESAPI Licence
-
-The BSD License
-
-Copyright (c) 2007, The OWASP Foundation
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
-Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-Neither the name of the OWASP Foundation nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-## node-esapi Licence
-
-The MIT License (MIT)
-
-Copyright (c) 2014 Karl Düüna
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Ths `bin/internal/flutter_plugins.version` file specifies the version
+of the `flutter/plugins` repository to be used for testing. The
+`flutter/plugins` repository isn't an upstream dependency of
+`flutter/flutter`; it is only used as part of the test suite for
+verification, and the pinned version here makes sure that tests are
+deterministic at each `flutter/flutter` commit.
